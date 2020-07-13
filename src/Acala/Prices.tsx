@@ -6,6 +6,8 @@ import Big from 'big.js'
 import { useApi, useAccounts } from '../hooks'
 import { FormatPrice, FormatDate } from '../components/Format'
 import sendTx from '../helpers/sendTx'
+import { StorageType as AcalaStorageType } from '@acala-network/types/interfaces/augment-api-mobx'
+import { Storage } from '../ApiProvider'
 
 
 type OraclePriceRowProps = {
@@ -33,6 +35,15 @@ const OraclePriceRow: React.FC<OraclePriceRowProps> = ({hasSudo, i, value, times
   )
 }
 
+
+const getDexPrice = (storage: Partial<Extract<Storage, AcalaStorageType>>, c: string) => {
+  let [a, b] = storage?.dex?.liquidityPool(c) || []
+  if (!a || !b) {
+    return NaN
+  }
+  return Number(b.toString()) / Number(a.toString())
+}
+
 const Prices = () => {
   const { api, storage, network } = useApi()
   const { accounts, activeAccount } = useAccounts()
@@ -56,19 +67,11 @@ const Prices = () => {
   const rawValues = storage.oracle.rawValues.allEntries()
   const values: Record<string, Array<{ address: string, value: string, timestamp: number }>> = {}
 
-  for (const [addr, value] of rawValues.entries()) {
-    for (const [key, rawVal] of value.entries()) {
+  for (const [addr, value] of Array.from(rawValues.entries())) {
+    for (const [key, rawVal] of Array.from(value.entries())) {
       values[key] = values[key] || []
-      values[key].push({ address: addr?.toString(), value: rawVal?.value?.value?.toString(), timestamp: rawVal?.value?.timestamp?.toNumber() })
+      values[key].push({ address: addr.toString(), value: rawVal.unwrapOrDefault().value.toString(), timestamp: rawVal.unwrapOrDefault().timestamp.toNumber() })
     }
-  }
-
-  const getDexPrice = (c: string) => {
-    let [a, b] = storage.dex.liquidityPool(c) || []
-    if (!a || !b) {
-      return NaN
-    }
-    return b.toString() / a.toString()
   }
 
   return (
@@ -102,7 +105,7 @@ const Prices = () => {
               <tr>
                 <th></th>
                 <th>DEX</th>
-                <td><FormatPrice value={getDexPrice(c)} isBase={false} /></td>
+                <td><FormatPrice value={getDexPrice(storage, c)} isBase={false} /></td>
               </tr>
             }
           </React.Fragment>
