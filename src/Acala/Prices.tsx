@@ -73,32 +73,40 @@ const Prices = () => {
 
   return (
     <table className="comp-prices">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Price</th>
+          <th>Updated At</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
       {
         currencies.map(c => (
           <React.Fragment key={c}>
-            <thead>
-              <tr>
-                <th>{c}</th>
-                <th>Price</th>
-                <th>Updated At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                (values[c] || []).map((v, i) => (
-                  <tr key={v.address}>
-                    <OraclePriceRow hasSudo={hasSudo} i={i} value={v.value} timestamp={v.timestamp} onUpdate={v => feedOracle({ price: v, currency: c, index: i })}/>
-                  </tr>
-                ))
-              }
-              <tr>
-                <th>DEX</th>
-                <td><FormatPrice value={getDexPrice(c)} isBase={false} /></td>
-              </tr>
-            </tbody>
+            <tr>
+              <th>{c}</th>
+            </tr>
+            {
+              (values[c] || []).map((v, i) => (
+                <tr key={v.address}>
+                  <th></th>
+                  <OraclePriceRow hasSudo={hasSudo} i={i} value={v.value} timestamp={v.timestamp} onUpdate={v => feedOracle({ price: v, currency: c, index: i })}/>
+                </tr>
+              ))
+            }
+            <tr>
+              <th></th>
+              <th>DEX</th>
+              <td><FormatPrice value={getDexPrice(c)} isBase={false} /></td>
+            </tr>
           </React.Fragment>
         ))
       }
+      </tbody>
     </table>
   )
 }
