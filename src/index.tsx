@@ -1,14 +1,21 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import 'mobx-react-lite/batchingForReactDom'
 import './index.css'
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 
+const Root = () => (
+  <Router>
+    <Route path="/" component={App} />
+  </Router>
+)
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Root />,
   document.getElementById('root')
 )
 

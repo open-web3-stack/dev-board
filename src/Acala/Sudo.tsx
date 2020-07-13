@@ -70,7 +70,7 @@ const Sudo = () => {
                   <Item name="index" label="Index" rules={[{ required: true }]} initialValue={0}>
                     <InputNumber />
                   </Item>
-                  <Item name="currency" label="Currency" rules={[{ required: true }]} initialValue="XBTC">
+                  <Item name="currency" label="Currency" rules={[{ required: true }]}>
                     <CurrencySelect/>
                   </Item>
                   <Item name="price" label="Price" rules={[{ required: true }]}>

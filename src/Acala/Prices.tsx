@@ -34,7 +34,7 @@ const OraclePriceRow: React.FC<OraclePriceRowProps> = ({hasSudo, i, value, times
 }
 
 const Prices = () => {
-  const { api, storage } = useApi()
+  const { api, storage, network } = useApi()
   const { accounts, activeAccount } = useAccounts()
 
   const sudoKey = storage.sudo.key?.toString()
@@ -51,7 +51,7 @@ const Prices = () => {
     )
   }, [api, sudoAcccount, activeAccount])
 
-  const currencies = ['ACA', 'DOT', 'XBTC']
+  const currencies = network === 'acala' ? ['ACA', 'DOT', 'XBTC'] : ['FAUD', 'FEUR', 'FJPY', 'FBTC', 'FETH', 'FCAD', 'FCHF', 'FXAU', 'FOIL']
 
   const rawValues = storage.oracle.rawValues.allEntries()
   const values: Record<string, Array<{ address: string, value: string, timestamp: number }>> = {}
@@ -98,11 +98,13 @@ const Prices = () => {
                 </tr>
               ))
             }
-            <tr>
-              <th></th>
-              <th>DEX</th>
-              <td><FormatPrice value={getDexPrice(c)} isBase={false} /></td>
-            </tr>
+            {api.query.dex &&
+              <tr>
+                <th></th>
+                <th>DEX</th>
+                <td><FormatPrice value={getDexPrice(c)} isBase={false} /></td>
+              </tr>
+            }
           </React.Fragment>
         ))
       }

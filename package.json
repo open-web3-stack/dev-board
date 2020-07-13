@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@acala-network/api": "^0.2.0-beta.55",
+    "@laminar/api": "^0.2.0-beta.127",
     "@open-web3/api-mobx": "^0.3.0-beta.25",
     "@polkadot/api": "^1.23.1",
     "@polkadot/extension-dapp": "^0.31.1",
@@ -19,6 +20,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@types/big.js": "^4.0.5",
+    "@types/react-router-dom": "^5.1.5",
     "antd": "^4.4.1",
     "big.js": "^5.2.2",
     "mobx": "^5.15.4",
@@ -27,6 +29,7 @@
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },
   "devDependencies": {

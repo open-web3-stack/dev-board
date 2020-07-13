@@ -3,11 +3,13 @@ import { Spin } from 'antd'
 import { ApiRx, WsProvider, ApiPromise } from '@polkadot/api'
 import { createStorage } from '@open-web3/api-mobx'
 
-import { options } from '@acala-network/api'
+import { options as acalaOptions } from '@acala-network/api'
+import { options as laminarOptions } from '@laminar/api'
 
 export interface ApiContextData {
   api: ApiRx;
   storage: any;
+  network: 'acala' | 'laminar';
 }
 
 export const ApiContext = createContext<ApiContextData>({} as ApiContextData)
@@ -25,6 +27,7 @@ const ApiProvider: FC<Props> = ({
 }) => {
   const [api, setApi] = useState<ApiRx>()
   const [storage, setStorage] = useState<any>()
+  const [lastNetwork, setLastNetwork] = useState<string>(network)
 
   const renderContent = (): ReactNode => {
     if (api === undefined || storage === undefined) {
@@ -40,14 +43,16 @@ const ApiProvider: FC<Props> = ({
   }
 
   useEffect(() => {
-    if (api === undefined) {
-      if (network !== 'acala') {
-        throw new Error('Network not supported yet')
-      }
+    if (api === undefined || network !== lastNetwork) {
+      setLastNetwork(network)
+      setApi(undefined)
+      setStorage(undefined)
 
       const ws = new WsProvider(endpoints)
 
-      const opt = options({ provider: ws })
+      const optFn = network === 'acala' ? acalaOptions : laminarOptions
+
+      const opt = optFn({ provider: ws })
 
       ApiRx.create(opt).toPromise().then(api => setApi(api))
 
@@ -60,11 +65,11 @@ const ApiProvider: FC<Props> = ({
     }
 
     return (): void => Reflect.has(api, 'disconnect') ? api.disconnect() : undefined
-  }, [api, network, endpoints])
+  }, [api, network, endpoints, lastNetwork])
 
   return (
     <ApiContext.Provider
-      value={{ api: api!, storage }}
+      value={{ api: api!, storage, network }}
     >
       {renderContent()}
     </ApiContext.Provider>
