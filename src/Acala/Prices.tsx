@@ -1,0 +1,106 @@
+import React, { useCallback, useState } from 'react'
+import { observer } from 'mobx-react'
+import { InputNumber, Button } from 'antd'
+import Big from 'big.js'
+
+import { useApi, useAccounts } from '../hooks'
+import { FormatPrice, FormatDate } from '../components/Format'
+import sendTx from '../helpers/sendTx'
+
+
+type OraclePriceRowProps = {
+  i: number;
+  value: string;
+  timestamp: number;
+  onUpdate: (val: number) => void;
+  hasSudo: boolean;
+}
+
+const OraclePriceRow: React.FC<OraclePriceRowProps> = ({hasSudo, i, value, timestamp, onUpdate}) => {
+  const [val, setVal] = useState<number>(+value / 1e18)
+  const updateCallback = useCallback(() => val && onUpdate(val * 1e18), [val, onUpdate])
+
+  return (
+    <>
+      <th>Operator {i}</th>
+      <td><FormatPrice value={value} /></td>
+      <td><FormatDate value={timestamp} /></td>
+      {hasSudo && <>
+        <td><InputNumber defaultValue={+value / 1e18} value={val} onChange={setVal as any} /></td>
+        <td><Button onClick={updateCallback}>Update</Button></td>
+      </>}
+    </>
+  )
+}
+
+const Prices = () => {
+  const { api, storage } = useApi()
+  const { accounts, activeAccount } = useAccounts()
+
+  const sudoKey = storage.sudo.key?.toString()
+  const sudoAcccount = accounts.find(a => a.address === sudoKey)
+  const hasSudo = sudoAcccount !== undefined
+
+  const feedOracle = useCallback((data) => {
+    activeAccount(sudoAcccount!.address)
+    sendTx(
+      sudoAcccount!.address,
+      api.tx.sudo.sudo(
+        api.tx.oracle.feedValues([[data.currency, new Big(data.price).toFixed()]], data.index || 0, 0, '0x')
+      )
+    )
+  }, [api, sudoAcccount, activeAccount])
+
+  const currencies = ['ACA', 'DOT', 'XBTC']
+
+  const rawValues = storage.oracle.rawValues.allEntries()
+  const values: Record<string, Array<{ address: string, value: string, timestamp: number }>> = {}
+
+  for (const [addr, value] of rawValues.entries()) {
+    for (const [key, rawVal] of value.entries()) {
+      values[key] = values[key] || []
+      values[key].push({ address: addr?.toString(), value: rawVal?.value?.value?.toString(), timestamp: rawVal?.value?.timestamp?.toNumber() })
+    }
+  }
+
+  const getDexPrice = (c: string) => {
+    let [a, b] = storage.dex.liquidityPool(c) || []
+    if (!a || !b) {
+      return NaN
+    }
+    return b.toString() / a.toString()
+  }
+
+  return (
+    <table className="comp-prices">
+      {
+        currencies.map(c => (
+          <React.Fragment key={c}>
+            <thead>
+              <tr>
+                <th>{c}</th>
+                <th>Price</th>
+                <th>Updated At</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                (values[c] || []).map((v, i) => (
+                  <tr key={v.address}>
+                    <OraclePriceRow hasSudo={hasSudo} i={i} value={v.value} timestamp={v.timestamp} onUpdate={v => feedOracle({ price: v, currency: c, index: i })}/>
+                  </tr>
+                ))
+              }
+              <tr>
+                <th>DEX</th>
+                <td><FormatPrice value={getDexPrice(c)} isBase={false} /></td>
+              </tr>
+            </tbody>
+          </React.Fragment>
+        ))
+      }
+    </table>
+  )
+}
+
+export default observer(Prices)

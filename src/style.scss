@@ -1,0 +1,40 @@
+#root {
+  height: 100%;
+}
+
+.app {
+  height: 100%;
+}
+
+.app-content {
+  height: 100%;
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 2rem;
+}
+
+.page-overview {
+  height: 100%;
+
+  margin: 1rem;
+}
+
+.hash-hex {
+  max-width: 150px;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.comp-prices {
+  th, td {
+    width: 200px;
+  }
+}
