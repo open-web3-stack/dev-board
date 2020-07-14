@@ -69,8 +69,8 @@ const Prices = () => {
   const rawValues = storage.oracle.rawValues.allEntries()
   const values: Record<string, Array<{ address: string, value: string, timestamp: number }>> = {}
 
-  for (const [addr, value] of Array.from(rawValues.entries())) {
-    for (const [key, rawVal] of Array.from(value.entries())) {
+  for (const [addr, value] of rawValues.entries()) {
+    for (const [key, rawVal] of value.entries()) {
       values[key] = values[key] || []
       values[key].push({ address: addr.toString(), value: rawVal.unwrapOrDefault().value.toString(), timestamp: rawVal.unwrapOrDefault().timestamp.toNumber() })
     }
