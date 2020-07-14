@@ -1,7 +1,7 @@
 import React, { ReactNode, FC, useState, useEffect, createContext } from 'react'
 import { Spin } from 'antd'
 import { ApiRx, WsProvider, ApiPromise } from '@polkadot/api'
-import { createStorage, BaseStorageType } from '@open-web3/api-mobx'
+import { createStorage } from '@open-web3/api-mobx'
 
 import { options as acalaOptions } from '@acala-network/api'
 import { options as laminarOptions } from '@laminar/api'
@@ -10,11 +10,10 @@ import { options as laminarOptions } from '@laminar/api'
 import { StorageType as AcalaStorageType } from '@acala-network/types/interfaces/augment-api-mobx'
 import { StorageType as LaminarStorageType } from '@laminar/types'
 
-export type Storage = BaseStorageType & (AcalaStorageType | LaminarStorageType);
 
 export interface ApiContextData {
   api: ApiRx;
-  storage: Storage;
+  storage: AcalaStorageType | LaminarStorageType;
   network: 'acala' | 'laminar';
 }
 
@@ -32,7 +31,7 @@ const ApiProvider: FC<Props> = ({
   children,
 }) => {
   const [api, setApi] = useState<ApiRx>()
-  const [storage, setStorage] = useState<Storage>()
+  const [storage, setStorage] = useState<ApiContextData['storage']>()
   const [lastNetwork, setLastNetwork] = useState<string>(network)
 
   const renderContent = (): ReactNode => {
@@ -63,13 +62,7 @@ const ApiProvider: FC<Props> = ({
       ApiRx.create(opt).toPromise().then(api => setApi(api))
 
       ApiPromise.create(opt).then(api => {
-        if (network === 'acala') {
-          const stroage = createStorage<AcalaStorageType>(api, ws)
-          setStorage(stroage)
-        } else if (network === 'laminar') {
-          const stroage = createStorage<LaminarStorageType>(api, ws)
-          setStorage(stroage)
-        }
+          setStorage(createStorage(api, ws))
       })
 
       return

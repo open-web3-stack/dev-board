@@ -6,8 +6,7 @@ import Big from 'big.js'
 import { useApi, useAccounts } from '../hooks'
 import { FormatPrice, FormatDate } from '../components/Format'
 import sendTx from '../helpers/sendTx'
-import { StorageType as AcalaStorageType } from '@acala-network/types/interfaces/augment-api-mobx'
-import { Storage } from '../ApiProvider'
+import { StorageType as AcalaStorageType } from '@acala-network/types'
 
 
 type OraclePriceRowProps = {
@@ -35,9 +34,12 @@ const OraclePriceRow: React.FC<OraclePriceRowProps> = ({hasSudo, i, value, times
   )
 }
 
+const isAcalaStorage = (storage: any): storage is AcalaStorageType => {
+  return !!storage.dex;
+}
 
-const getDexPrice = (storage: Partial<Extract<Storage, AcalaStorageType>>, c: string) => {
-  let [a, b] = storage?.dex?.liquidityPool(c) || []
+const getDexPrice = (storage: AcalaStorageType, c: string) => {
+  let [a, b] = storage.dex.liquidityPool(c as any) || []
   if (!a || !b) {
     return NaN
   }
@@ -101,7 +103,7 @@ const Prices = () => {
                 </tr>
               ))
             }
-            {api.query.dex &&
+            {isAcalaStorage(storage) &&
               <tr>
                 <th></th>
                 <th>DEX</th>

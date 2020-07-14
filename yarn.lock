@@ -2,33 +2,33 @@
 # yarn lockfile v1
 
 
-"@acala-network/api-derive@^0.2.0-beta.56":
-  version "0.2.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@acala-network/api-derive/-/api-derive-0.2.0-beta.56.tgz#b874c5f4ea3154c076f4fa861db7ebfa634fb9a1"
-  integrity sha512-v5RJmPkpYrvinPkf3ADs91bot+p74Fx3Um58Gr0CveRMzamjUE551mZSzofex0T3b7gQLpBXeCGFDsTlgFzl/w==
+"@acala-network/api-derive@^0.2.0-beta.57":
+  version "0.2.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@acala-network/api-derive/-/api-derive-0.2.0-beta.57.tgz#503efb2770e07311719a61cab5ded3dcfceb6ee0"
+  integrity sha512-mVtyIWDi+CPaxc2RHrWqEixsC+zbxFeCn9JmqY930AMtQdomD75EspVk/Sw54/YJJ6v5zxfBCFQoMbQikXahGA==
   dependencies:
-    "@acala-network/types" "^0.2.0-beta.56"
+    "@acala-network/types" "^0.2.0-beta.57"
     "@babel/runtime" "^7.10.2"
     "@polkadot/rpc-core" "^1.18.1"
     memoizee "^0.4.14"
     rxjs "^6.5.5"
 
 "@acala-network/api@^0.2.0-beta.56":
-  version "0.2.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@acala-network/api/-/api-0.2.0-beta.56.tgz#5c15689031345fbe8c26bb3de51c7311042894b2"
-  integrity sha512-fY7L7IPG8fhkMonxqon0dRfnZqafp/ZD6E+faKvgcpO+w4XNshSzB0gjc37kBMeGoPvHEzgDYCEhO+TqiO3q2w==
+  version "0.2.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@acala-network/api/-/api-0.2.0-beta.57.tgz#aa947bf93b308f3de49db1e66cbe56fb2e1d9001"
+  integrity sha512-NqeMyWOpx8pL2etGZ8Xj6/gOwZMTIO+9NME9vqhhULSKt16D7gRIXNo/SCN85Zt3FVR9vepcwAZm2Y66VuroMA==
   dependencies:
-    "@acala-network/api-derive" "^0.2.0-beta.56"
-    "@acala-network/types" "^0.2.0-beta.56"
+    "@acala-network/api-derive" "^0.2.0-beta.57"
+    "@acala-network/types" "^0.2.0-beta.57"
     "@babel/runtime" "^7.10.2"
     "@open-web3/orml-api-derive" "^0.3.0-beta.19"
     "@polkadot/api" "^1.18.1"
     "@polkadot/rpc-core" "^1.18.1"
 
-"@acala-network/types@^0.2.0-beta.56":
-  version "0.2.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@acala-network/types/-/types-0.2.0-beta.56.tgz#ed3e0f7091db2cbd8406c6f2e044af9c9d3766ff"
-  integrity sha512-lsKbzlvrxrp0/j/dJkmkFwKmsg+szskkzNay6x5hN4MsVX4uRxX8YRZw6HBTectmUtthfcFEv6HebJOxbQv54Q==
+"@acala-network/types@^0.2.0-beta.56", "@acala-network/types@^0.2.0-beta.57":
+  version "0.2.0-beta.57"
+  resolved "https://registry.yarnpkg.com/@acala-network/types/-/types-0.2.0-beta.57.tgz#9f9e57754e464da6064ca6ce4648ab7e970f6e30"
+  integrity sha512-i0fekVLQDbYGIvmfCOEL3imLwiGMO0Ekl+DWYtNaZ/vtyrhBobJ93csvzl4FaRXUEJaye6TcRa+WWmK/72AyLw==
   dependencies:
     "@babel/runtime" "^7.10.2"
     "@open-web3/api-mobx" "^0.3.0-beta.29"
@@ -1527,13 +1527,13 @@
     chalk "^3.0.0"
 
 "@laminar/api@^0.2.0-beta.128":
-  version "0.2.0-beta.128"
-  resolved "https://registry.yarnpkg.com/@laminar/api/-/api-0.2.0-beta.128.tgz#640995a8b6265c32b6acb3e41c0687e14737b4fa"
-  integrity sha512-EMUry2s79QqvtdUWkRB2ZBY9eiM1p8Aug18adhQ1U5BM8dCuWufS3lddEtpNgnrsE+rQl6BwwVIESM6WihPsPg==
+  version "0.2.0-beta.129"
+  resolved "https://registry.yarnpkg.com/@laminar/api/-/api-0.2.0-beta.129.tgz#5b807e632c235bfc7b3edb351b9d89be664593f1"
+  integrity sha512-yyGwcuYtYsPwcVhBS+cFrqbiFTXs1Q/7zU6r5zKoH0nCruu/YOSNPUv5d1diFoKr/SdRAkWggTUUYyOuls2+Eg==
   dependencies:
     "@babel/runtime" "^7.8.0"
     "@laminar/flow-protocol-ethereum" "0.0.12"
-    "@laminar/types" "^0.2.0-beta.128"
+    "@laminar/types" "^0.2.0-beta.129"
     "@open-web3/orml-api-derive" "^0.3.0-beta.20"
     "@polkadot/api" "^1.20.1"
     rxjs "^6.5.5"
@@ -1547,10 +1547,10 @@
   resolved "https://registry.yarnpkg.com/@laminar/flow-protocol-ethereum/-/flow-protocol-ethereum-0.0.12.tgz#ad0771b1428c95d90fcc573c222d6cf4b4f89555"
   integrity sha512-kB4cOuwdAQLpc03lQ01vg5fXy9kz5lacNDCI5FD473p4GAAVjHHh05dCgXGnZBOLpk5AGlJWUAg0YpaRHAmCfw==
 
-"@laminar/types@^0.2.0-beta.128":
-  version "0.2.0-beta.128"
-  resolved "https://registry.yarnpkg.com/@laminar/types/-/types-0.2.0-beta.128.tgz#1ec55b762906a7788a8f793e95c99b6bd2003553"
-  integrity sha512-hQGpM/M9qQyNhQnz2BUnAxrWugmUwu0S/K+QfjheG1NmWpfW1mkvTLcyzgW8s1axIGqvGPjdYinwLKYZMziMug==
+"@laminar/types@^0.2.0-beta.128", "@laminar/types@^0.2.0-beta.129":
+  version "0.2.0-beta.129"
+  resolved "https://registry.yarnpkg.com/@laminar/types/-/types-0.2.0-beta.129.tgz#afece809ab79e95527c6179e2a09c076e8d85fd2"
+  integrity sha512-twcot7k47dXWCgVibZljgWRAox0c0YzWk9csJ5p5ciN6rIRpoiy+B21gwHBj/eImlG66CezQviPCIN5iBiIlNw==
   dependencies:
     "@babel/runtime" "^7.8.0"
     "@open-web3/api-mobx" "^0.3.0-beta.27"
@@ -1572,9 +1572,9 @@
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
 "@open-web3/api-mobx@^0.3.0-beta.27", "@open-web3/api-mobx@^0.3.0-beta.29":
-  version "0.3.0-beta.29"
-  resolved "https://registry.yarnpkg.com/@open-web3/api-mobx/-/api-mobx-0.3.0-beta.29.tgz#29bef8cee9a29973e4a5cd18bb7fa6686395447f"
-  integrity sha512-kXCxY3Z+42kN05i4b6H2aWMNrQ7mbkYkLHcLG4RrmzEDyGBor4n9zeqUUwhYzmb+KkhUbZbVfwoBWbeV3xPfXg==
+  version "0.3.0-beta.30"
+  resolved "https://registry.yarnpkg.com/@open-web3/api-mobx/-/api-mobx-0.3.0-beta.30.tgz#480e03b59212039ac43b743a163555153f7b56e5"
+  integrity sha512-Z0WRNB4v+Ny8tI0dbBn0Embe9nUTOqdrXaSkZsO3DSWSIZUj67H7p1kDPVdSl9Aw6t8pVWH3d3wAD96OM/HzaA==
   dependencies:
     "@polkadot/api" "^1.23.1"
     "@polkadot/types" "^1.23.1"
@@ -1583,17 +1583,17 @@
     mobx-utils "^5.5.7"
 
 "@open-web3/orml-api-derive@^0.3.0-beta.19", "@open-web3/orml-api-derive@^0.3.0-beta.20":
-  version "0.3.0-beta.29"
-  resolved "https://registry.yarnpkg.com/@open-web3/orml-api-derive/-/orml-api-derive-0.3.0-beta.29.tgz#69de4e31e1ee3b425a1bae1219ca70067a9bae1f"
-  integrity sha512-IlBBwrsZeA2DAh/bYffPEv0cIKsY61j0rncqI6Us28fbl1LOBnEK/JSqBkTq96lRnFhd9S9LrGMOswHlqOsR/A==
+  version "0.3.0-beta.30"
+  resolved "https://registry.yarnpkg.com/@open-web3/orml-api-derive/-/orml-api-derive-0.3.0-beta.30.tgz#3f857fbcbacb3812cda78a086ebaae00d13abae1"
+  integrity sha512-ND6ITvYFjyunMq832XI7ItwptfedjexmXyAdDyyIfLaMZV97usdRf2e2i98AEJsocDNuLsFGvilD4MZ4lowtcQ==
   dependencies:
     memoizee "^0.4.14"
     rxjs "^6.5.5"
 
 "@open-web3/orml-types@^0.3.0-beta.27", "@open-web3/orml-types@^0.3.0-beta.29":
-  version "0.3.0-beta.29"
-  resolved "https://registry.yarnpkg.com/@open-web3/orml-types/-/orml-types-0.3.0-beta.29.tgz#c332dd004338c46a8527b2c5281d89807f6665d4"
-  integrity sha512-+WHmEd4uCNLeeDDwB/FLEpR5pqkrlwSkpPmXnLqCQtWOJybI35ti6r2KvknFBpYvKfOm6HW1OGU782KWMSnM3A==
+  version "0.3.0-beta.30"
+  resolved "https://registry.yarnpkg.com/@open-web3/orml-types/-/orml-types-0.3.0-beta.30.tgz#a795988fbc6027a7c8cb3fad62139dae38337341"
+  integrity sha512-DMUcAglH1wLUTqBf1qD0YVpW8Zoyu6MxEps/144mpBGwduSVV5FcD2sQ9GUeYXZ50weBJWd6Hx1w2QaNMltz1Q==
 
 "@polkadot/api-derive@1.24.1":
   version "1.24.1"
