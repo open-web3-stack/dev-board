@@ -10,9 +10,11 @@
     "lint": "eslint --ext js,ts,tsx src"
   },
   "dependencies": {
-    "@acala-network/api": "^0.2.0-beta.55",
-    "@laminar/api": "^0.2.0-beta.127",
-    "@open-web3/api-mobx": "^0.3.0-beta.25",
+    "@acala-network/api": "^0.2.0-beta.56",
+    "@acala-network/types": "^0.2.0-beta.56",
+    "@laminar/api": "^0.2.0-beta.128",
+    "@laminar/types": "^0.2.0-beta.128",
+    "@open-web3/api-mobx": "^0.3.0-beta.29",
     "@polkadot/api": "^1.23.1",
     "@polkadot/extension-dapp": "^0.31.1",
     "@polkadot/extension-inject": "^0.31.1",

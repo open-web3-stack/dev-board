@@ -3,6 +3,8 @@ import { observer } from 'mobx-react'
 import { InputNumber, Button } from 'antd'
 import Big from 'big.js'
 
+import { StorageType as AcalaStorageType } from '@acala-network/types'
+
 import { useApi, useAccounts } from '../hooks'
 import { FormatPrice, FormatDate } from '../components/Format'
 import sendTx from '../helpers/sendTx'
@@ -33,6 +35,18 @@ const OraclePriceRow: React.FC<OraclePriceRowProps> = ({hasSudo, i, value, times
   )
 }
 
+const isAcalaStorage = (storage: any): storage is AcalaStorageType => {
+  return !!storage.dex;
+}
+
+const getDexPrice = (storage: AcalaStorageType, c: string) => {
+  let [a, b] = storage.dex.liquidityPool(c as any) || []
+  if (!a || !b) {
+    return NaN
+  }
+  return Number(b.toString()) / Number(a.toString())
+}
+
 const Prices = () => {
   const { api, storage, network } = useApi()
   const { accounts, activeAccount } = useAccounts()
@@ -59,16 +73,8 @@ const Prices = () => {
   for (const [addr, value] of rawValues.entries()) {
     for (const [key, rawVal] of value.entries()) {
       values[key] = values[key] || []
-      values[key].push({ address: addr?.toString(), value: rawVal?.value?.value?.toString(), timestamp: rawVal?.value?.timestamp?.toNumber() })
+      values[key].push({ address: addr.toString(), value: rawVal.unwrapOrDefault().value.toString(), timestamp: rawVal.unwrapOrDefault().timestamp.toNumber() })
     }
-  }
-
-  const getDexPrice = (c: string) => {
-    let [a, b] = storage.dex.liquidityPool(c) || []
-    if (!a || !b) {
-      return NaN
-    }
-    return b.toString() / a.toString()
   }
 
   return (
@@ -98,11 +104,11 @@ const Prices = () => {
                 </tr>
               ))
             }
-            {api.query.dex &&
+            {isAcalaStorage(storage) &&
               <tr>
                 <th></th>
                 <th>DEX</th>
-                <td><FormatPrice value={getDexPrice(c)} isBase={false} /></td>
+                <td><FormatPrice value={getDexPrice(storage, c)} isBase={false} /></td>
               </tr>
             }
           </React.Fragment>

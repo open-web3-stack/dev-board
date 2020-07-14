@@ -6,9 +6,13 @@ import { createStorage } from '@open-web3/api-mobx'
 import { options as acalaOptions } from '@acala-network/api'
 import { options as laminarOptions } from '@laminar/api'
 
+import { StorageType as AcalaStorageType } from '@acala-network/types'
+import { StorageType as LaminarStorageType } from '@laminar/types'
+
+
 export interface ApiContextData {
   api: ApiRx;
-  storage: any;
+  storage: AcalaStorageType | LaminarStorageType;
   network: 'acala' | 'laminar';
 }
 
@@ -26,7 +30,7 @@ const ApiProvider: FC<Props> = ({
   children,
 }) => {
   const [api, setApi] = useState<ApiRx>()
-  const [storage, setStorage] = useState<any>()
+  const [storage, setStorage] = useState<ApiContextData['storage']>()
   const [lastNetwork, setLastNetwork] = useState<string>(network)
 
   const renderContent = (): ReactNode => {
@@ -57,8 +61,7 @@ const ApiProvider: FC<Props> = ({
       ApiRx.create(opt).toPromise().then(api => setApi(api))
 
       ApiPromise.create(opt).then(api => {
-        const stroage = createStorage(api, ws)
-        setStorage(stroage)
+          setStorage(createStorage(api, ws))
       })
 
       return
@@ -69,7 +72,7 @@ const ApiProvider: FC<Props> = ({
 
   return (
     <ApiContext.Provider
-      value={{ api: api!, storage, network }}
+      value={{ api: api!, storage: storage!, network }}
     >
       {renderContent()}
     </ApiContext.Provider>
