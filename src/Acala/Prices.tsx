@@ -3,10 +3,11 @@ import { observer } from 'mobx-react'
 import { InputNumber, Button } from 'antd'
 import Big from 'big.js'
 
+import { StorageType as AcalaStorageType } from '@acala-network/types'
+
 import { useApi, useAccounts } from '../hooks'
 import { FormatPrice, FormatDate } from '../components/Format'
 import sendTx from '../helpers/sendTx'
-import { StorageType as AcalaStorageType } from '@acala-network/types'
 
 
 type OraclePriceRowProps = {

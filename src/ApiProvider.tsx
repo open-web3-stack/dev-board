@@ -6,8 +6,7 @@ import { createStorage } from '@open-web3/api-mobx'
 import { options as acalaOptions } from '@acala-network/api'
 import { options as laminarOptions } from '@laminar/api'
 
-// TODO: update after `augment-api-mobx` is available on index
-import { StorageType as AcalaStorageType } from '@acala-network/types/interfaces/augment-api-mobx'
+import { StorageType as AcalaStorageType } from '@acala-network/types'
 import { StorageType as LaminarStorageType } from '@laminar/types'
 
 
