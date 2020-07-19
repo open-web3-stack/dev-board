@@ -7,7 +7,7 @@ const { Option } = Select
 const CurrencySelect: React.FC = (props) => {
   const { network } = useApi()
   const currencies = network === 'acala' ? [
-    'ACA', 'aUSD', 'DOT', 'XBTC'
+    'ACA', 'aUSD', 'DOT', 'XBTC', 'RENBTC'
   ] : [
     'LAMI', 'aUSD', 'fEUR', 'fJPY', 'fBTC', 'fETH', 'fAUD', 'fCAD', 'fCHF', 'fXAU', 'fOIL'
   ]
