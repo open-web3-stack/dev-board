@@ -65,7 +65,7 @@ const Prices = () => {
     )
   }, [api, sudoAcccount, activeAccount])
 
-  const currencies = network === 'acala' ? ['ACA', 'DOT', 'XBTC', 'RENBTC'] : ['FAUD', 'FEUR', 'FJPY', 'FBTC', 'FETH', 'FCAD', 'FCHF', 'FXAU', 'FOIL']
+  const currencies = network === 'acala' ? ['ACA', 'DOT', 'LDOT', 'XBTC', 'RENBTC'] : ['FAUD', 'FEUR', 'FJPY', 'FBTC', 'FETH', 'FCAD', 'FCHF', 'FXAU', 'FOIL']
 
   const rawValues = storage.oracle.rawValues.allEntries()
   const values: Record<string, Array<{ address: string, value: string, timestamp: number }>> = {}
