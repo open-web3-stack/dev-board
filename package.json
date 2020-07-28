@@ -1,6 +1,7 @@
 {
   "name": "dev-board",
   "version": "0.1.0",
+  "homepage": "https://open-web3-stack.github.io/dev-board",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
