@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+    - name: build
+      env:
+        NODE_ENV: proudction
+      run: yarn && yarn build
+    - name: GitHub Pages
+      uses: crazy-max/ghaction-github-pages@v2.1.1
+      with:
+        build_dir: build
