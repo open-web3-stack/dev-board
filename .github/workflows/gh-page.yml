@@ -12,12 +12,11 @@ jobs:
     - uses: actions/setup-node@v1
     - name: build
       env:
-        NODE_ENV: proudction
+        NODE_ENV: development
       run: yarn && yarn build
     - name: GitHub Pages
       uses: crazy-max/ghaction-github-pages@v2.1.1
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
-        GENERATE_SOURCEMAP: false
       with:
         build_dir: build
