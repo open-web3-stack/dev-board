@@ -8,6 +8,7 @@ import SubscribeObservable from '../components/SubscribeObservable'
 
 import Sudo from './Sudo'
 import Prices from './Prices'
+import Loans from './acala/Loans'
 
 const { Panel } = Collapse
 
@@ -39,21 +40,27 @@ const Header: React.FC<HeaderProps> = ({
   </PageHeader>
 )
 
-const Content: React.FC = () => (
+const Content: React.FC<{ network: string }> = ({ network }) => (
   <>
-    <Collapse defaultActiveKey={['sudo', 'prices']}>
+    <Collapse defaultActiveKey={['prices', 'loans']}>
       <Panel header="Sudo" key="sudo">
         <Sudo />
       </Panel>
       <Panel header="Prices" key="prices">
         <Prices />
       </Panel>
+      {
+        network === 'acala' &&
+        <Panel header="Loans" key="loans">
+          <Loans />
+        </Panel>
+      }
     </Collapse>
   </>
 )
 
 const Overview = () => {
-  const { api, storage } = useApi()
+  const { api, storage, network } = useApi()
 
   const data = useMemo(
     () => combineLatest(
@@ -83,7 +90,7 @@ const Overview = () => {
                       finalizedHash: finalizedHeader?.hash.toHex(),
                       now
                     }} />
-                    <Content />
+                    <Content network={network} />
                   </>
                 )
               }}

@@ -24,6 +24,14 @@
   height: 100%;
 
   margin: 1rem;
+
+  .comp-loans {
+    table.overall {
+      th {
+        min-width: 150px;
+      }
+    }
+  }
 }
 
 .hash-hex {

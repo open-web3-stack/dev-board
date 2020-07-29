@@ -8,7 +8,7 @@ import { Link, Switch, Route, Redirect, useLocation } from 'react-router-dom'
 import ApiProvider from './ApiProvider'
 import AccountProvider from './AccountProvider'
 import config from './config'
-import Overview from './Acala/Overview'
+import Overview from './pages/Overview'
 
 const { Header, Content } = Layout
 

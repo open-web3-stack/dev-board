@@ -3,11 +3,9 @@ import { observer } from 'mobx-react'
 import { InputNumber, Button } from 'antd'
 import Big from 'big.js'
 
-import { StorageType as AcalaStorageType } from '@acala-network/types'
-
 import { useApi, useAccounts } from '../hooks'
 import { FormatPrice, FormatDate } from '../components/Format'
-import sendTx from '../helpers/sendTx'
+import { sendTx, isAcalaStorage, getDexPrice } from '../helpers'
 
 
 type OraclePriceRowProps = {
@@ -33,18 +31,6 @@ const OraclePriceRow: React.FC<OraclePriceRowProps> = ({hasSudo, i, value, times
       </>}
     </>
   )
-}
-
-const isAcalaStorage = (storage: any): storage is AcalaStorageType => {
-  return !!storage.dex;
-}
-
-const getDexPrice = (storage: AcalaStorageType, c: string) => {
-  let [a, b] = storage.dex.liquidityPool(c as any) || []
-  if (!a || !b) {
-    return NaN
-  }
-  return Number(b.toString()) / Number(a.toString())
 }
 
 const Prices = () => {
