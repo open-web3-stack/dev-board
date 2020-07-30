@@ -5,7 +5,7 @@ import Big from 'big.js'
 
 import { useApi, useAccounts } from '../hooks'
 import { FormatPrice, FormatDate } from '../components/Format'
-import { sendTx, isAcalaStorage, getDexPrice } from '../helpers'
+import { sendTx, isAcalaStorage, getDexPrice, currencyIds } from '../helpers'
 
 
 type OraclePriceRowProps = {
@@ -51,7 +51,7 @@ const Prices = () => {
     )
   }, [api, sudoAcccount, activeAccount])
 
-  const currencies = network === 'acala' ? ['ACA', 'DOT', 'LDOT', 'XBTC', 'RENBTC'] : ['FAUD', 'FEUR', 'FJPY', 'FBTC', 'FETH', 'FCAD', 'FCHF', 'FXAU', 'FOIL']
+  const currencies = currencyIds[network]
 
   const rawValues = storage.oracle.rawValues.allEntries()
   const values: Record<string, Array<{ address: string, value: string, timestamp: number }>> = {}

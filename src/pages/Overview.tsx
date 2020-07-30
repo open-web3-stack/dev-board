@@ -8,6 +8,7 @@ import SubscribeObservable from '../components/SubscribeObservable'
 
 import Sudo from './Sudo'
 import Prices from './Prices'
+import Account from './Account'
 import Loans from './acala/Loans'
 
 const { Panel } = Collapse
@@ -48,6 +49,9 @@ const Content: React.FC<{ network: string }> = ({ network }) => (
       </Panel>
       <Panel header="Prices" key="prices">
         <Prices />
+      </Panel>
+      <Panel header="Account" key="account">
+        <Account />
       </Panel>
       {
         network === 'acala' &&
