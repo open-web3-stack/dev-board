@@ -19,7 +19,7 @@ export const getDexPrice = (storage: AcalaStorageType, c: string) => {
 
 export const currencyIds = {
   acala: ['ACA', 'DOT', 'LDOT', 'XBTC', 'RENBTC'],
-  laminar: ['LAMI', 'FAUD', 'FEUR', 'FJPY', 'FBTC', 'FETH', 'FCAD', 'FCHF', 'FXAU', 'FOIL'],
+  laminar: ['LAMI', 'AUSD', 'FAUD', 'FEUR', 'FJPY', 'FBTC', 'FETH', 'FCAD', 'FCHF', 'FXAU', 'FOIL'],
 }
 
 export const getBalance = (storage: AcalaStorageType | LaminarStorageType, account: string, currency: string) => {
