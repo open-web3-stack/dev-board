@@ -18,7 +18,7 @@ export const getDexPrice = (storage: AcalaStorageType, c: string) => {
 }
 
 export const currencyIds = {
-  acala: ['ACA', 'DOT', 'LDOT', 'XBTC', 'RENBTC'],
+  acala: ['ACA', 'AUSD', 'DOT', 'LDOT', 'XBTC', 'RENBTC'],
   laminar: ['LAMI', 'AUSD', 'FAUD', 'FEUR', 'FJPY', 'FBTC', 'FETH', 'FCAD', 'FCHF', 'FXAU', 'FOIL'],
 }
 
