@@ -14,6 +14,9 @@ export const getDexPrice = (storage: AcalaStorageType, c: string) => {
   if (!a || !b) {
     return '0'
   }
+  if (a.eq(0)) {
+    return '0'
+  }
   return new Big(b.toString()).div(a.toString()).toString()
 }
 

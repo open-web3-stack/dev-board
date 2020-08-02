@@ -94,7 +94,7 @@ const Prices = () => {
               <tr>
                 <th></th>
                 <th>DEX</th>
-                <td><FormatPrice value={getDexPrice(storage, c)} isBase={false} /></td>
+                <td><FormatPrice value={c === 'AUSD' ? '1' : getDexPrice(storage, c)} isBase={false} /></td>
               </tr>
             }
           </React.Fragment>
