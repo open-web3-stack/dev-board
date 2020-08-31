@@ -58,10 +58,10 @@ const ApiProvider: FC<Props> = ({
 
       const opt = optFn({ provider: ws })
 
-      ApiRx.create(opt).toPromise().then(api => setApi(api))
+      ApiRx.create(opt as any).toPromise().then(api => setApi(api))
 
-      ApiPromise.create(opt).then(api => {
-          setStorage(createStorage(api, ws))
+      ApiPromise.create(opt as any).then(api => {
+          setStorage(createStorage(api as any, ws as any))
       })
 
       return
