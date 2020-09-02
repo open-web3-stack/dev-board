@@ -8,7 +8,7 @@ import { StorageType as AcalaStorageType } from '@acala-network/types'
 import { useApi } from '../../hooks'
 import { FormatBalance, FormatPercent } from '../../components/Format'
 import { getDexPrice, getOraclePrice } from '../../helpers'
-import { collateralToUSD, calcCollateralRatio, debitToUSD, Fixed18 } from '@acala-network/app-util';
+import { collateralToUSD, calcCollateralRatio, debitToUSD, Fixed18 } from '@acala-network/app-util'
 
 
 type RecordType = {
@@ -95,26 +95,26 @@ const Loans = () => {
     data[currency].debits = debits.toString()
   }
 
-  console.log(data);
+  console.log(data)
 
-  const dataSource: RecordType[] = [];
-  const stableCurrencyId = api.consts.cdpTreasury.getStableCurrencyId.toString();
+  const dataSource: RecordType[] = []
+  const stableCurrencyId = api.consts.cdpTreasury.getStableCurrencyId.toString()
 
   for (const [currencyId, value] of acala.loans.positions.allEntries().entries()) {
     for (const [account, position] of value.entries()) {
-      if (position.collateral.toString() === '0') continue;
+      if (position.collateral.toString() === '0') continue
 
       const debitExchangeRate = acala.cdpEngine.debitExchangeRate(currencyId as any)
       const exchangeRate = debitExchangeRate?.isSome
         ? debitExchangeRate.unwrap()
         : api.consts.cdpEngine.defaultDebitExchangeRate
 
-      const collateralPrice = getOraclePrice(acala)(currencyId);
-      const stableCoinPrice = getOraclePrice(acala)(stableCurrencyId);
+      const collateralPrice = getOraclePrice(acala)(currencyId)
+      const stableCoinPrice = getOraclePrice(acala)(stableCurrencyId)
 
       if (!collateralPrice || !stableCoinPrice) continue
 
-      const collateralUSD = collateralToUSD(new Fixed18(position.collateral.toString()), new Fixed18(collateralPrice));
+      const collateralUSD = collateralToUSD(new Fixed18(position.collateral.toString()), new Fixed18(collateralPrice))
       const debitsUSD = debitToUSD(
         new Fixed18(position.debit.toString()),
         new Fixed18(exchangeRate.toString()),
