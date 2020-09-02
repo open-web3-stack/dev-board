@@ -2,6 +2,7 @@ import { StorageType as AcalaStorageType } from '@acala-network/types'
 import { StorageType as LaminarStorageType } from '@laminar/types'
 import Big from 'big.js'
 import { decodeAddress } from '@polkadot/keyring'
+import { computedFn } from 'mobx-utils';
 
 export { default as sendTx } from './sendTx'
 
@@ -36,3 +37,29 @@ export const getBalance = (storage: AcalaStorageType | LaminarStorageType, accou
     return null
   }
 }
+
+const median = (arr: number[]): number => {
+  const mid = Math.floor(arr.length / 2);
+  const nums = [...arr].sort((a, b) => a - b);
+  return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+};
+
+export const getOraclePrice = (storage: LaminarStorageType | AcalaStorageType) =>
+  computedFn((tokenId: string) => {
+    if (tokenId === 'AUSD') return 1e18;
+    const prices: number[] = [];
+    const rawValues = storage.oracle.rawValues.allEntries();
+
+    for (const rawValue of rawValues.values()) {
+      for (const [key, price] of rawValue.entries()) {
+        if (key === tokenId && price.isSome) {
+          prices.push(Number(price.unwrap().value.toString()));
+        }
+      }
+    }
+
+    if (prices.length > 0) {
+      return median(prices);
+    }
+    return null;
+  });
