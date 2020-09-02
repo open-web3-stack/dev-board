@@ -21,6 +21,11 @@ const App: React.FC = () => {
   const pathname = loc.pathname.replace('/', '')
   const network = ['acala','laminar'].includes(pathname) ? pathname : 'acala'
 
+  const resetEndpoints = () => {
+    config.reset(network as any)
+    window.location.reload()
+  }
+
   return (
     <Layout className="app">
       <Header>
@@ -31,6 +36,7 @@ const App: React.FC = () => {
         </Menu>
         <Modal width={800} title="Configure endpoints" visible={settingVisible} onCancel={() => setSettingVisible(false)} destroyOnClose onOk={() => window.location.reload()}>
           <EndpointSetting network={network as any} />
+          <Button onClick={resetEndpoints}>Reset</Button>
         </Modal>
       </Header>
       <Content className="app-content">

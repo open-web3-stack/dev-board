@@ -24,6 +24,10 @@ class Config {
     localStorage.setItem(network, JSON.stringify(endpoints))
   }
 
+  public reset(network: Network) {
+    localStorage.removeItem(network)
+  }
+
 }
 
 export const config = new Config()
