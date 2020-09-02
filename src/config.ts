@@ -16,7 +16,7 @@ const endpoints = {
 class Config {
   public getEndpints(network: Network) {
     const value = localStorage.getItem(network)
-    if (!value) return endpoints[network];
+    if (!value) return endpoints[network]
     return JSON.parse(value) as string[]
   }
 

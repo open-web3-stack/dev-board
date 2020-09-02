@@ -18,7 +18,7 @@ const { Header, Content } = Layout
 const App: React.FC = () => {
   const [settingVisible, setSettingVisible] = useState(false)
   const loc = useLocation()
-  const pathname = loc.pathname.replace('/', '');
+  const pathname = loc.pathname.replace('/', '')
   const network = ['acala','laminar'].includes(pathname) ? pathname : 'acala'
 
   return (

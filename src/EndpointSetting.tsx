@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Tag, Input, Tooltip } from 'antd';
-import { config } from './config';
+import React, { useState } from 'react'
+import { Tag, Input, Tooltip } from 'antd'
+import { config } from './config'
 
 const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network }) => {
   const [state, setState] = useState({
@@ -11,29 +11,29 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
     editInputValue: '',
   })
 
-  const {endpoints, editInputIndex, editInputValue, inputValue, inputVisible } = state;
+  const {endpoints, editInputIndex, editInputValue, inputValue, inputVisible } = state
 
-  let input: Input;
-  let editInput: Input;
+  let input: Input
+  let editInput: Input
 
   const handleClose = (removedEndpoint: any) => {
-    const newEndpoints = endpoints.filter(endpoint => endpoint !== removedEndpoint);
-    setState({ ...state, endpoints: newEndpoints });
-  };
+    const newEndpoints = endpoints.filter(endpoint => endpoint !== removedEndpoint)
+    setState({ ...state, endpoints: newEndpoints })
+  }
 
   const showInput = () => {
     setState({ ...state, inputVisible: true })
-    input?.focus();
-  };
+    input?.focus()
+  }
 
   const handleInputChange = (e: any) => {
-    setState({ ...state, inputValue: e.target.value });
-  };
+    setState({ ...state, inputValue: e.target.value })
+  }
 
   const handleInputConfirm = () => {
-    let newEndpoints = endpoints;
+    let newEndpoints = endpoints
     if (inputValue && endpoints.indexOf(inputValue) === -1) {
-      newEndpoints = [...endpoints, inputValue];
+      newEndpoints = [...endpoints, inputValue]
     }
 
     setState({
@@ -43,16 +43,16 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
       inputValue: '',
     })
 
-    config.setEndpoints(network, newEndpoints);
+    config.setEndpoints(network, newEndpoints)
   }
 
   const handleEditInputChange = (e: any) => {
-    setState({ ...state, editInputValue: e.target.value });
-  };
+    setState({ ...state, editInputValue: e.target.value })
+  }
 
   const handleEditInputConfirm = () => {
-    const newEndpoints = [...endpoints];
-    newEndpoints[editInputIndex] = editInputValue;
+    const newEndpoints = [...endpoints]
+    newEndpoints[editInputIndex] = editInputValue
 
     setState({
       ...state,
@@ -60,17 +60,17 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
       editInputIndex: -1,
       editInputValue: ''
     })
-  };
+  }
 
   
   const saveInputRef = (i: Input) => {
-    input = i;
-  };
+    input = i
+  }
 
   
   const saveEditInputRef = (input: Input) => {
-    editInput = input;
-  };
+    editInput = input
+  }
 
   return (
     <>
@@ -87,10 +87,10 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
             onBlur={handleEditInputConfirm}
             onPressEnter={handleEditInputConfirm}
           />
-        );
+        )
       }
 
-      const isLongTag = endpoint.length > 30;
+      const isLongTag = endpoint.length > 30
 
       const endpointElem = (
         <Tag
@@ -102,21 +102,21 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
           <span
             onDoubleClick={e => {
               setState({ ...state, editInputIndex: index, editInputValue: endpoint })
-              editInput?.focus();
-              e.preventDefault();
+              editInput?.focus()
+              e.preventDefault()
             }}
           >
             {isLongTag ? `${endpoint.slice(0, 30)}...` : endpoint}
           </span>
         </Tag>
-      );
+      )
       return isLongTag ? (
         <Tooltip title={endpoint} key={endpoint}>
           {endpointElem}
         </Tooltip>
       ) : (
         endpointElem
-      );
+      )
     })}
     {inputVisible && (
       <Input
@@ -136,7 +136,7 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
       </Tag>
     )}
     </>
-  );
+  )
 }
 
-export default EndpointSetting;
+export default EndpointSetting
