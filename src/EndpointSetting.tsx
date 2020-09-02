@@ -19,6 +19,8 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
   const handleClose = (removedEndpoint: any) => {
     const newEndpoints = endpoints.filter(endpoint => endpoint !== removedEndpoint)
     setState({ ...state, endpoints: newEndpoints })
+
+    config.setEndpoints(network, newEndpoints)
   }
 
   const showInput = () => {
@@ -60,6 +62,8 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
       editInputIndex: -1,
       editInputValue: ''
     })
+
+    config.setEndpoints(network, newEndpoints)
   }
 
   
@@ -73,11 +77,12 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
   }
 
   return (
-    <>
+    <div>
     {endpoints.map((endpoint, index) => {
       if (editInputIndex === index) {
         return (
           <Input
+            style={{ marginBottom: '10px'}}
             ref={saveEditInputRef}
             key={endpoint}
             size="small"
@@ -94,6 +99,7 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
 
       const endpointElem = (
         <Tag
+          style={{ marginBottom: '10px'}}
           className="edit-tag"
           key={endpoint}
           closable={index !== 0}
@@ -121,6 +127,7 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
     {inputVisible && (
       <Input
         ref={saveInputRef}
+        style={{ marginBottom: '10px'}}
         type="text"
         size="small"
         className="tag-input"
@@ -131,11 +138,11 @@ const EndpointSetting: React.FC<{ network: 'acala' | 'laminar'}> = ({ network })
       />
     )}
     {!inputVisible && (
-      <Tag className="site-tag-plus" onClick={showInput}>
+      <Tag className="site-tag-plus" style={{ marginBottom: '10px'}} onClick={showInput}>
         New Endpoint
       </Tag>
     )}
-    </>
+    </div>
   )
 }
 
