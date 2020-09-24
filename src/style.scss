@@ -39,6 +39,12 @@
   text-overflow: ellipsis;
   display: inline-block;
   overflow: hidden;
+  overflow-wrap: normal;
+}
+
+.block-number {
+  display: inline-block;
+  overflow: hidden;
 }
 
 .comp-prices {
@@ -47,5 +53,11 @@
   }
   th, td {
     width: 200px;
+  }
+  .operator-addr {
+    max-width: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 10px;
   }
 }

@@ -29,10 +29,10 @@ const App: React.FC = () => {
   return (
     <Layout className="app">
       <Header>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[loc.pathname]}>
+        <Menu theme="dark" mode="horizontal" selectedKeys={[loc.pathname]}>
           <Menu.Item key="/acala"><Link to="acala">Acala</Link></Menu.Item>
           <Menu.Item key="/laminar"><Link to="laminar">Laminar</Link></Menu.Item>
-          <Button style={{ position:'absolute', right: '20px', top: '15px' }} onClick={() => setSettingVisible(true)}>Settings</Button>
+          <Menu.Item onClick={() => setSettingVisible(true)}>Settings</Menu.Item>
         </Menu>
         <Modal width={800} title="Configure endpoints" visible={settingVisible} onCancel={() => setSettingVisible(false)} destroyOnClose onOk={() => window.location.reload()}>
           <EndpointSetting network={network as any} />

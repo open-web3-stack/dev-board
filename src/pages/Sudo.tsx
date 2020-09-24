@@ -1,14 +1,16 @@
 import React, { useCallback } from 'react'
 import { observer } from 'mobx-react'
-import { Form, Input, InputNumber, Button, Collapse } from 'antd'
+import { Form, Input, InputNumber, Button, Collapse, Select } from 'antd'
 import Big from 'big.js'
 
 import { useApi, useAccounts } from '../hooks'
 import CurrencySelect from '../components/CurrencySelect'
 import sendTx from '../helpers/sendTx'
+import { isAcalaStorage } from '../helpers'
 
 const { Item } = Form
 const { Panel } = Collapse
+const { Option } = Select
 
 const Sudo = () => {
   const { api, storage } = useApi()
@@ -35,10 +37,12 @@ const Sudo = () => {
     sendTx(
       sudoAcccount!.address,
       api.tx.sudo.sudo(
-        api.tx.oracle.feedValues([[data.currency, price]], data.index || 0, 0, '0x')
+        api.tx[data.oracle].feedValues([[data.currency, price]])
       )
     )
   }, [api, sudoAcccount, activeAccount])
+
+  const oracles = isAcalaStorage(storage) ? ['acalaOracle', 'bandOracle']: ['oracle']
 
   return (
     <div>
@@ -67,8 +71,10 @@ const Sudo = () => {
             <Collapse>
               <Panel header="Feed Oracle" key="feed-oracle">
                 <Form onFinish={feedOraclue}>
-                  <Item name="index" label="Index" rules={[{ required: true }]} initialValue={0}>
-                    <InputNumber />
+                  <Item name="oracle" label="Oracle" rules={[{ required: true }]} initialValue={oracles[0]}>
+                    <Select>
+                      {oracles.map(o => <Option key={o} value={o}>{o}</Option>)}
+                    </Select>
                   </Item>
                   <Item name="currency" label="Currency" rules={[{ required: true }]}>
                     <CurrencySelect/>

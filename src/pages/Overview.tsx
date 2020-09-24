@@ -31,10 +31,10 @@ const Header: React.FC<HeaderProps> = ({
   >
     <Descriptions size="small" column={3}>
       <Descriptions.Item label="Latest Block">
-        {blockNumber} &nbsp;<span className="hash-hex">{blockHash}</span>
+        <span className="block-number">{blockNumber} &nbsp;</span><span className="hash-hex">{blockHash}</span>
       </Descriptions.Item>
       <Descriptions.Item label="Finalized Block">
-        {finalizedNumber} &nbsp;<span className="hash-hex">{finalizedHash}</span>
+        <span className="block-number">{finalizedNumber} &nbsp;</span><span className="hash-hex">{finalizedHash}</span>
       </Descriptions.Item>
       <Descriptions.Item label="Block Time">{now && new Date(now).toLocaleString()}</Descriptions.Item>
     </Descriptions>

@@ -48,9 +48,17 @@ export const getOraclePrice = (storage: LaminarStorageType | AcalaStorageType) =
   computedFn((tokenId: string) => {
     if (tokenId === 'AUSD') return 1e18
     const prices: number[] = []
-    const rawValues = storage.oracle.rawValues.allEntries()
 
-    for (const rawValue of rawValues.values()) {
+    let rawValues
+    if (isAcalaStorage(storage)) {
+      const acalaValues = storage.acalaOracle.rawValues.allEntries()
+      const bandValues = storage.bandOracle.rawValues.allEntries()
+      rawValues = [...acalaValues.values(), ...bandValues.values()]
+    } else {
+      rawValues = storage.oracle.rawValues.allEntries().values()
+    }
+
+    for (const rawValue of rawValues) {
       for (const [key, price] of rawValue.entries()) {
         if (key === tokenId && price.isSome) {
           prices.push(Number(price.unwrap().value.toString()))

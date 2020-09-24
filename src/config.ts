@@ -2,8 +2,8 @@ type Network = 'acala' | 'laminar'
 
 const endpoints = {
   acala: [
-    'wss://node-6684611760525328384.rz.onfinality.io/ws',
-    'wss://node-6684611762228215808.jm.onfinality.io/ws',
+    'wss://node-6714447553777491968.jm.onfinality.io/ws',
+    'wss://node-6714447553211260928.rz.onfinality.io/ws',
     'wss://testnet-node-1.acala.laminar.one/ws'
   ],
   laminar: [

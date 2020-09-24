@@ -67,7 +67,9 @@ const ApiProvider: FC<Props> = ({
       return
     }
 
-    return (): void => Reflect.has(api, 'disconnect') ? api.disconnect() : undefined
+    return () => {
+      Reflect.has(api, 'disconnect') && api.disconnect()
+    }
   }, [api, network, endpoints, lastNetwork])
 
   return (

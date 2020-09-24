@@ -1,65 +1,53 @@
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
-import { InputNumber, Button } from 'antd'
-import Big from 'big.js'
 
-import { useApi, useAccounts } from '../hooks'
+import { useApi } from '../hooks'
 import { FormatPrice, FormatDate } from '../components/Format'
-import { sendTx, isAcalaStorage, getDexPrice, currencyIds } from '../helpers'
+import { isAcalaStorage, getDexPrice, currencyIds } from '../helpers'
 
 
 type OraclePriceRowProps = {
-  i: number;
+  address: string;
   value: string;
   timestamp: number;
-  onUpdate: (val: number) => void;
-  hasSudo: boolean;
+  provider: string;
 }
 
-const OraclePriceRow: React.FC<OraclePriceRowProps> = ({hasSudo, i, value, timestamp, onUpdate}) => {
-  const [val, setVal] = useState<number>(+value / 1e18)
-  const updateCallback = useCallback(() => val && onUpdate(val * 1e18), [val, onUpdate])
-
+const OraclePriceRow: React.FC<OraclePriceRowProps> = ({provider, address, value, timestamp}) => {
   return (
     <>
-      <th>Operator {i}</th>
+      <th>{provider}</th>
+      <th className='operator-addr'>{address}</th>
       <td><FormatPrice value={value} /></td>
       <td><FormatDate value={timestamp} /></td>
-      {hasSudo && <>
-        <td><InputNumber defaultValue={+value / 1e18} value={val} onChange={setVal as any} /></td>
-        <td><Button onClick={updateCallback}>Update</Button></td>
-      </>}
     </>
   )
 }
 
 const Prices = () => {
-  const { api, storage, network } = useApi()
-  const { accounts, activeAccount } = useAccounts()
-
-  const sudoKey = storage.sudo.key?.toString()
-  const sudoAcccount = accounts.find(a => a.address === sudoKey)
-  const hasSudo = sudoAcccount !== undefined
-
-  const feedOracle = useCallback((data) => {
-    activeAccount(sudoAcccount!.address)
-    sendTx(
-      sudoAcccount!.address,
-      api.tx.sudo.sudo(
-        api.tx.oracle.feedValues([[data.currency, new Big(data.price).toFixed()]], data.index || 0, 0, '0x')
-      )
-    )
-  }, [api, sudoAcccount, activeAccount])
+  const { storage, network } = useApi()
 
   const currencies = currencyIds[network]
 
-  const rawValues = storage.oracle.rawValues.allEntries()
-  const values: Record<string, Array<{ address: string, value: string, timestamp: number }>> = {}
+  let oracleValues
 
-  for (const [addr, value] of rawValues.entries()) {
+  if (isAcalaStorage(storage)) {
+    const acalaValues = storage.acalaOracle.rawValues.allEntries()
+    const bandValues = storage.bandOracle.rawValues.allEntries()
+    oracleValues = [{ values: acalaValues.entries(), provider: 'Acala' }, { values: bandValues.entries(), provider: 'Band' }]
+  } else {
+    oracleValues = [{ values: storage.oracle.rawValues.allEntries().entries(), provider: 'laminar' }]
+  }
+
+  const values: Record<string, Array<{ provider: string, address: string, value: string, timestamp: number }>> = {}
+
+  for (const { provider, values: rawValues } of oracleValues)
+  for (const [addr, value] of rawValues) {
     for (const [key, rawVal] of value.entries()) {
       values[key] = values[key] || []
-      values[key].push({ address: addr.toString(), value: rawVal.unwrapOrDefault().value.toString(), timestamp: rawVal.unwrapOrDefault().timestamp.toNumber() })
+      values[key].push({
+        provider, address: addr.toString(), value: rawVal.unwrapOrDefault().value.toString(), timestamp: rawVal.unwrapOrDefault().timestamp.toNumber()
+      })
     }
   }
 
@@ -68,7 +56,8 @@ const Prices = () => {
       <thead>
         <tr>
           <th></th>
-          <th></th>
+          <th>Provider</th>
+          <th>Operator</th>
           <th>Price</th>
           <th>Updated At</th>
           <th></th>
@@ -84,9 +73,9 @@ const Prices = () => {
             </tr>
             {
               (values[c] || []).map((v, i) => (
-                <tr key={v.address}>
+                <tr key={i}>
                   <th></th>
-                  <OraclePriceRow hasSudo={hasSudo} i={i} value={v.value} timestamp={v.timestamp} onUpdate={v => feedOracle({ price: v, currency: c, index: i })}/>
+                  <OraclePriceRow {...v} />
                 </tr>
               ))
             }
@@ -94,6 +83,7 @@ const Prices = () => {
               <tr>
                 <th></th>
                 <th>DEX</th>
+                <th></th>
                 <td><FormatPrice value={c === 'AUSD' ? '1' : getDexPrice(storage, c)} isBase={false} /></td>
               </tr>
             }
